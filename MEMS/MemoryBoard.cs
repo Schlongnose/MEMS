@@ -21,7 +21,7 @@ namespace MEMS
 
         public MemoryBoard(int iNumOfCards)
         {
-            ValidateInput(iNumOfCards);
+            ValidateBoardSize(iNumOfCards);
 
             board = new List<int>();
             _iNumOfCards = iNumOfCards;
@@ -32,7 +32,7 @@ namespace MEMS
             Shuffle();
         }
 
-        private void ValidateInput(int iNumOfCards)
+        private void ValidateBoardSize(int iNumOfCards)
         {
             if (iNumOfCards <= 9)
             {
@@ -50,6 +50,33 @@ namespace MEMS
                 throw new Exception("Memory Board must have even number of cards");
             }
         }
+        public bool ValidateGuesses(int guess1, int guess2)
+        {
+            if (guess1 < 0)
+            {
+                return false;
+            }
+            if (guess1 >= board.Count)
+            {
+                return false;
+            }
+
+            if(guess1 == guess2)
+            {
+                return false;
+            }
+            if (guess2 < 0)
+            {
+                return false;
+            }
+            if (guess2 >= board.Count)
+            {
+                return false;
+            }
+            return true;
+
+        }
+    
 
         private void InitializeBoard()
         {

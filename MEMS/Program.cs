@@ -206,9 +206,14 @@ public class Program
                 Console.WriteLine("Player 1 choose another card");
                 int guess2 = Getinput();
                 bool playerOneTurn = true;
+                bool isGuessesValid = memoryBoard.ValidateGuesses(guess1, guess2);
+                if (!isGuessesValid)
+                {
+                    Console.WriteLine("Invalid Guess");
+                    continue;
+                }
                 memoryBoard.Open(guess1, guess2);
                 memoryBoard.Print('%');
-                
                 bool checkingIsMatch = memoryBoard.IsMatch(guess1, guess2);
                 if (checkingIsMatch == true)
                 {
