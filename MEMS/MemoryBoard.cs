@@ -27,6 +27,8 @@ namespace MEMS
             _iNumOfCards = iNumOfCards;
             facedown = new List<bool>();
             InitializeBoard();
+
+
             Shuffle();
         }
 
