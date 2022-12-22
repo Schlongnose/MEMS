@@ -196,10 +196,11 @@ public class Program
               */
             
             MemoryBoard memoryBoard = new MemoryBoard(10);
-            memoryBoard.Print('%');
+           
             
             while(!memoryBoard.IsBoardEmpty()) //Same as != True
             {
+                memoryBoard.Print('%');
                 Console.WriteLine("Player 1 choose a card");
                 int guess1 = Getinput();
                 Console.WriteLine("Player 1 choose another card");
@@ -207,17 +208,23 @@ public class Program
                 bool playerOneTurn = true;
                 memoryBoard.Open(guess1, guess2);
                 memoryBoard.Print('%');
+                
                 bool checkingIsMatch = memoryBoard.IsMatch(guess1, guess2);
                 if (checkingIsMatch == true)
                 {
+                    Console.WriteLine("Match!!!");
                     memoryBoard.Remove(guess1, guess2);
                 }
                 else
                 {
                     memoryBoard.CloseAll();
+                    Console.WriteLine("Didn't Match");
                 }
+                System.Threading.Thread.Sleep(3000);
+                Console.Clear();
+                
             }
-           
+
             //memoryBoard.OpenAll();
             ////memoryBoard.PrintMaasked('$');
             //memoryBoard.Print('*');
@@ -230,6 +237,7 @@ public class Program
             //memoryBoard.Print('*');
             //var ismatch = memoryBoard.IsMatch(9, 9);
             //Console.WriteLine(ismatch);
+            Console.WriteLine("GAME");
         }
         catch (Exception x)
         {
