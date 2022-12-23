@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MEMS
@@ -15,7 +16,6 @@ namespace MEMS
     public class MemoryBoard
     {
         private int _iNumOfCards;
-
         private List<int> board;
         private List<bool> facedown;
 
@@ -34,7 +34,7 @@ namespace MEMS
 
         private void ValidateBoardSize(int iNumOfCards)
         {
-            if (iNumOfCards <= 9)
+            if (iNumOfCards <= 7)
             {
                 throw new Exception("Memory Board must have at least 10 cards");
             }
@@ -141,7 +141,7 @@ namespace MEMS
         }
         public bool IsMatch(int position, int position2)
         {
-           var result = (board[position] == board[position2]);
+            var result = (board[position] == board[position2]);
             return result;
         }
         public bool IsBoardEmpty()

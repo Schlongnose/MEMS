@@ -2,6 +2,9 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Numerics;
+using System.Runtime.CompilerServices;
+using static System.Formats.Asn1.AsnWriter;
 
 public class Program
 {
@@ -136,6 +139,13 @@ public class Program
             //Console.WriteLine();
         }
     }
+    public static void PrintScoreBoard(List<int> Scores)
+    {
+        for (int i = 0; i < Scores.Count; i++)
+        {
+            Console.WriteLine($"Player {i} Score is {Scores[i]}");
+        }
+    }
 
     public static void Main()
     {
@@ -194,16 +204,28 @@ public class Program
               // Console.Clear(); // Clear the screen, basically a refresh
 
               */
+
+
             
-            MemoryBoard memoryBoard = new MemoryBoard(10);
-           
             
-            while(!memoryBoard.IsBoardEmpty()) //Same as != True
+            MemoryBoard memoryBoard = new MemoryBoard(8);
+            List<int> playerScore;
+            playerScore = new List<int>();
+            int numberOfPlayers = 2;
+            int playerTurn = 0;
+            for (int i = 0; i < numberOfPlayers; i++)
             {
+                playerScore.Add(0);
+            }
+
+
+            while (!memoryBoard.IsBoardEmpty()) //Same as != True
+            {
+                PrintScoreBoard(playerScore);
                 memoryBoard.Print('%');
-                Console.WriteLine("Player 1 choose a card");
+                Console.WriteLine($"Player {playerTurn} choose a card");
                 int guess1 = Getinput();
-                Console.WriteLine("Player 1 choose another card");
+                Console.WriteLine($"Player {playerTurn} choose another card");
                 int guess2 = Getinput();
                 bool playerOneTurn = true;
                 bool isGuessesValid = memoryBoard.ValidateGuesses(guess1, guess2);
@@ -225,6 +247,17 @@ public class Program
                     memoryBoard.CloseAll();
                     Console.WriteLine("Didn't Match");
                 }
+               
+                if (checkingIsMatch == false)
+                {
+                    playerTurn++;
+                    playerTurn %= numberOfPlayers;
+                }
+                else
+                {
+                    playerScore[playerTurn]++;
+                }
+
                 System.Threading.Thread.Sleep(3000);
                 Console.Clear();
                 
@@ -243,6 +276,12 @@ public class Program
             //var ismatch = memoryBoard.IsMatch(9, 9);
             //Console.WriteLine(ismatch);
             Console.WriteLine("GAME");
+            int winnerScore = playerScore.Max();
+            var winningIndexes = playerScore.FindAll(_ => _ == winnerScore);
+            for (int i = 0; i < winningIndexes.Count; i++)
+            {
+                Console.WriteLine($"winner is {i}");
+            }
         }
         catch (Exception x)
         {
