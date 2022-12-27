@@ -11,10 +11,15 @@ using static System.Formats.Asn1.AsnWriter;
 public class Program
 {
 
-    public static int Getinput()
+    public static int GetIntInput()
     {
         var input = Console.ReadLine();
         var result = int.Parse(input);
+        return result;
+    }
+    public static string GetStringInput()
+    {
+        var result = Console.ReadLine();
         return result;
     }
 
@@ -49,11 +54,14 @@ public class Program
             // x.Name = "Billy";
             // players.Add(x);
             Console.WriteLine("How Many Players?");
-            int numberOfPlayers = Getinput();
+            int numberOfPlayers = GetIntInput();
             for (int i = 0; i < numberOfPlayers; i++)
             {
                // playerScore.Add(0);
-                var x = new Player(i.ToString());
+               Console.WriteLine($"Player{i} Please Enter Your Name.");
+                var name = GetStringInput();
+                
+                var x = new Player(name);
                 //x.Name = i.ToString();
                 players.Add(x);
             }
@@ -65,10 +73,10 @@ public class Program
             {
                 Printplayerscore(players);
                 memoryBoard.Print('%');
-                Console.WriteLine($"Player {playerTurn} choose a card");
-                int guess1 = Getinput();
-                Console.WriteLine($"Player {playerTurn} choose another card");
-                int guess2 = Getinput();
+                Console.WriteLine($"Player {players[playerTurn].Name} choose a card");
+                int guess1 = GetIntInput();
+                Console.WriteLine($"Player {players[playerTurn].Name} choose another card");
+                int guess2 = GetIntInput();
                 bool isGuessesValid = memoryBoard.ValidateGuesses(guess1, guess2);
                 if (!isGuessesValid)
                 {
@@ -104,7 +112,7 @@ public class Program
 
             }
 
-
+            Printplayerscore(players);
             Console.WriteLine("GAME");
             // players example: [{"john", 5}, {"billy", 3}, {"josh", 5}]
             int winnerScore = players.Select(p => p.Point).Max(); // e.g. 5
