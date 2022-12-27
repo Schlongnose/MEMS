@@ -1,14 +1,16 @@
 ﻿using MEMS;
+using MEMS;
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Drawing;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using static System.Formats.Asn1.AsnWriter;
 
 public class Program
 {
-   
+
     public static int Getinput()
     {
         var input = Console.ReadLine();
@@ -16,9 +18,9 @@ public class Program
         return result;
     }
 
-    
 
-   
+
+
 
     public static void PrintScoreBoard(List<int> Scores)
     {
@@ -40,41 +42,40 @@ public class Program
     {
         try
         {
-            
             MemoryBoard memoryBoard = new MemoryBoard(8);
-            List<int> playerScore;
+           // List<int> playerScore = new List<int>();
             List<Player> players = new List<Player>();
-           // var x = new Player();
-           // x.Name = "Billy";
-           // players.Add(x);
-            playerScore = new List<int>();
-            int numberOfPlayers = 2;
-            int playerTurn = 0;
+            // var x = new Player();
+            // x.Name = "Billy";
+            // players.Add(x);
+            Console.WriteLine("How Many Players?");
+            int numberOfPlayers = Getinput();
             for (int i = 0; i < numberOfPlayers; i++)
             {
-                playerScore.Add(0);
-                var x = new Player();
-                x.Name = i.ToString();
+               // playerScore.Add(0);
+                var x = new Player(i.ToString());
+                //x.Name = i.ToString();
                 players.Add(x);
             }
 
             //Printplayerscore(players);
 
+            int playerTurn = 0;
             while (!memoryBoard.IsBoardEmpty()) //Same as != True
             {
-                PrintScoreBoard(playerScore);
+                Printplayerscore(players);
                 memoryBoard.Print('%');
                 Console.WriteLine($"Player {playerTurn} choose a card");
                 int guess1 = Getinput();
                 Console.WriteLine($"Player {playerTurn} choose another card");
                 int guess2 = Getinput();
-                bool playerOneTurn = true;
                 bool isGuessesValid = memoryBoard.ValidateGuesses(guess1, guess2);
                 if (!isGuessesValid)
                 {
                     Console.WriteLine("Invalid Guess");
                     continue;
                 }
+
                 memoryBoard.Open(guess1, guess2);
                 memoryBoard.Print('%');
                 bool checkingIsMatch = memoryBoard.IsMatch(guess1, guess2);
@@ -82,48 +83,49 @@ public class Program
                 {
                     Console.WriteLine("Match!!!");
                     memoryBoard.Remove(guess1, guess2);
+                    //playerScore[playerTurn]++;
+                    
+                    //var currentPlayer = players[playerTurn];
+                    //currentPlayer.Point++;
+
+                    players[playerTurn].Point++;
                 }
                 else
                 {
                     memoryBoard.CloseAll();
                     Console.WriteLine("Didn't Match");
-                }
-               
-                if (checkingIsMatch == false)
-                {
                     playerTurn++;
                     playerTurn %= numberOfPlayers;
                 }
-                else
-                {
-                    playerScore[playerTurn]++;
-                }
+
 
                 System.Threading.Thread.Sleep(3000);
                 Console.Clear();
-                
+
             }
 
-            //memoryBoard.OpenAll();
-            ////memoryBoard.PrintMaasked('$');
-            //memoryBoard.Print('*');
-            //memoryBoard.Open(3, 7);//lets pretend the player elects to open the index 3
-            //memoryBoard.Open(10, 12); 
-            //memoryBoard.Print('*');
-            //memoryBoard.CloseAll();
-            //memoryBoard.Print('*');
-            //memoryBoard.Open(5, 8);
-            //memoryBoard.Print('*');
-            //var ismatch = memoryBoard.IsMatch(9, 9);
-            //Console.WriteLine(ismatch);
 
             Console.WriteLine("GAME");
-            int winnerScore = playerScore.Max();
-            var winningIndexes = playerScore.FindAll(_ => _ == winnerScore);
-            for (int i = 0; i < winningIndexes.Count; i++)
+            // players example: [{"john", 5}, {"billy", 3}, {"josh", 5}]
+            int winnerScore = players.Select(p => p.Point).Max(); // e.g. 5
+            //var winningIndexes = playerScore.FindAll(_ => _ == winnerScore);
+            var winningPlayers = players.FindAll(p => p.Point == winnerScore);
+
+            for (int i = 0; i < winningPlayers.Count; i++)
             {
-                Console.WriteLine($"winner is {i}");
+                Console.WriteLine($"winner is {winningPlayers[i].Name}");
             }
+            //foreach(var winningplayer in winningPlayers )
+            //{
+            //    Console.WriteLine($"winner is {winningplayer.Name}");
+            //}
+            //// players:         [{"john", 5}, {"billy", 3}, {"josh", 5}]
+            //// winning indeces: [0, 2]
+
+            //for (int i = 0; i < winningPlayers.Count; i++)
+            //{
+            //    Console.WriteLine($"winner is {players[winningPlayers[i]].Name}");
+            //}
         }
         catch (Exception x)
         {
