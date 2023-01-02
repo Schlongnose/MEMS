@@ -10,6 +10,7 @@ using static System.Formats.Asn1.AsnWriter;
 
 public class Program
 {
+   
 
     public static int GetIntInput()
     {
@@ -24,7 +25,11 @@ public class Program
     }
 
 
+    public static void Main()
+    {
 
+        PlayTikTakToe();
+    }
 
 
     public static void PrintScoreBoard(List<int> Scores)
@@ -43,7 +48,7 @@ public class Program
         }
     }
 
-    public static void Main()
+    public static void PlayMems()
     {
         try
         {
@@ -139,5 +144,33 @@ public class Program
         {
 
         }
+        
+    }
+    
+    public static void PlayTikTakToe()
+    {
+
+        Tiktakboard tiktakboard = new Tiktakboard();
+        Console.WriteLine("Welcome to Billy's TIKTAKTOE. First to get 3 in a row wins.");
+        tiktakboard.Print();
+
+
+
+        while (!tiktakboard.checkIfGameOver())
+        {
+            Console.WriteLine("Player One Pick A Spot.");
+            int playerOne = GetIntInput();
+            if (!tiktakboard.ValidateChooseSpot(playerOne))
+            {
+                Console.WriteLine("Invalid Choice.");
+                continue;
+            }
+            tiktakboard.Choosespot(playerOne);
+            tiktakboard.Print();
+
+        }
+
+
+        Console.WriteLine("GameOver");
     }
 }
