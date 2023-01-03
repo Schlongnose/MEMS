@@ -149,24 +149,45 @@ public class Program
     
     public static void PlayTikTakToe()
     {
-
+        List<Player> players = new List<Player>();
         Tiktakboard tiktakboard = new Tiktakboard();
         Console.WriteLine("Welcome to Billy's TIKTAKTOE. First to get 3 in a row wins.");
         tiktakboard.Print();
+        int numberOfPlayers = 2;
+        for (int i = 0; i < numberOfPlayers; i++)
+        {
+            Console.WriteLine($"Player{i} Please Enter Your Name.");
+            var name = GetStringInput();
+
+            var x = new Player(name);
+            players.Add(x);
+        }
 
 
-
+        int playerTurn = 0;
         while (!tiktakboard.checkIfGameOver())
         {
-            Console.WriteLine("Player One Pick A Spot.");
-            int playerOne = GetIntInput();
-            if (!tiktakboard.ValidateChooseSpot(playerOne))
+           
+            Console.WriteLine($"Player {players[playerTurn].Name} Pick A Spot.");
+            int playerChoice = GetIntInput();
+            if (!tiktakboard.ValidateChooseSpot(playerChoice))
             {
                 Console.WriteLine("Invalid Choice.");
                 continue;
             }
-            tiktakboard.Choosespot(playerOne);
+            playerTurn++;
+            playerTurn %= numberOfPlayers;
+            if(playerTurn == 0)
+            {
+                tiktakboard.Choosespot(playerChoice, "X");
+            }
+            else
+            {
+                tiktakboard.Choosespot(playerChoice, "O");
+            }
+
             tiktakboard.Print();
+            
 
         }
 

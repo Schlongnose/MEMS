@@ -45,9 +45,9 @@ namespace MEMS
             Console.WriteLine();
             Console.WriteLine();
         }
-        public void Choosespot(int chosenSpot)
+        public void Choosespot(int chosenSpot, string playerSymbol)
         {
-            board[chosenSpot-1] = "X"; 
+            board[chosenSpot-1] = playerSymbol; 
             return;
 
         }
