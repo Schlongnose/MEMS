@@ -63,7 +63,7 @@ namespace MEMS
             }
             return true;
         }
-        public bool checkIfGameOver()
+        public bool checkForWinner()
         {
             if (board[0] == board[1] && board[1] == board[2]) // top cross
             {
@@ -98,6 +98,17 @@ namespace MEMS
             {
                 return true;
             }
+            return false;
+        }
+        public bool IsSpaceAvailable()
+        {
+            foreach(var item in board)
+            {
+                if (item != "X" && item != "O")
+                {
+                    return true; 
+                }
+             }
             return false;
         }
 

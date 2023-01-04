@@ -165,7 +165,7 @@ public class Program
 
 
         int playerTurn = 0;
-        while (!tiktakboard.checkIfGameOver())
+        while (!tiktakboard.checkForWinner())
         {
            
             Console.WriteLine($"Player {players[playerTurn].Name} Pick A Spot.");
@@ -175,8 +175,7 @@ public class Program
                 Console.WriteLine("Invalid Choice.");
                 continue;
             }
-            playerTurn++;
-            playerTurn %= numberOfPlayers;
+            
             if(playerTurn == 0)
             {
                 tiktakboard.Choosespot(playerChoice, "X");
@@ -185,13 +184,26 @@ public class Program
             {
                 tiktakboard.Choosespot(playerChoice, "O");
             }
-
             tiktakboard.Print();
-            
+            var isWinner = tiktakboard.checkForWinner();
+            if(isWinner == true)
+            {
+                Console.WriteLine($"winner is {players[playerTurn].Name}");
+                break;
+            }
+            var spotAvailable = tiktakboard.IsSpaceAvailable();
+            if(!spotAvailable)
+            {
+                Console.WriteLine("no contest");
+                break;
+            }
+            playerTurn++;
+            playerTurn %= numberOfPlayers;
+
 
         }
 
 
-        Console.WriteLine("GameOver");
+        
     }
 }
