@@ -100,7 +100,7 @@ namespace MEMS
             }
             return false;
         }
-        public bool IsSpaceAvailable()
+        public bool IsAnySpaceAvailable()
         {
             foreach(var item in board)
             {

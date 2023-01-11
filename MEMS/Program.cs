@@ -27,8 +27,8 @@ public class Program
 
     public static void Main()
     {
-
-        PlayTikTakToe();
+        PlayConnect();
+        //PlayTikTakToe();
     }
 
 
@@ -191,7 +191,7 @@ public class Program
                 Console.WriteLine($"winner is {players[playerTurn].Name}");
                 break;
             }
-            var spotAvailable = tiktakboard.IsSpaceAvailable();
+            var spotAvailable = tiktakboard.IsAnySpaceAvailable();
             if(!spotAvailable)
             {
                 Console.WriteLine("no contest");
@@ -205,5 +205,18 @@ public class Program
 
 
         
+    }
+    public static void PlayConnect()
+    {
+        Connect4Board connect4Board= new Connect4Board();
+        connect4Board.Print();
+        for( int i = 0; i <10; i++ )
+        {
+            Console.WriteLine("Enter a Column ");
+            var input = GetIntInput();
+            connect4Board.ChooseColumn(input , "X");
+            Console.WriteLine("\n\n\n\n");
+            connect4Board.Print();
+        }
     }
 }
